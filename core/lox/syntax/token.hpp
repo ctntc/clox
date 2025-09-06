@@ -17,6 +17,8 @@ namespace lox::syntax {
     identifier,
 
     punctuation,
+    simple_operator,
+    compound_operator,
     keyword,
 
     end_of_file,
@@ -44,6 +46,10 @@ namespace lox::syntax {
       return "identifier";
     case TokenKind::punctuation:
       return "punctuation";
+    case TokenKind::simple_operator:
+      return "simple-operator";
+    case TokenKind::compound_operator:
+      return "compound-operator";
     case TokenKind::keyword:
       return "keyword";
     case TokenKind::end_of_file:
@@ -60,6 +66,10 @@ namespace lox::syntax {
 
     static auto make(TokenKind k, std::string_view l, Span s) noexcept
       -> Token;
+
+    static auto make_eof(Span s = { .start = 1, .end = 1 }) noexcept -> Token;
+
+    auto to_string() noexcept -> std::string;
   };
 
 }

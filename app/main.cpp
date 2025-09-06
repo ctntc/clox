@@ -1,70 +1,63 @@
+#include <lox/syntax/lex.hpp>
+
 #include <lox/syntax/token.hpp>
 
-#include <cstdio>
+#include <spdlog/cfg/env.h>
+
 #include <cstdlib> 
 #include <exception>
 #include <format>
 #include <fstream>
 #include <iterator>
-#include <lox/syntax/location.hpp>
 #include <print>
 #include <stdexcept>
 #include <string>
-#include <string_view>
+#include <vector>
 
-namespace {
-  /**
-   *
-   * @param filename The path to the file to read.
-   * @return A Unicode string containing the file's contents.
-   */
-  auto read_to_wstring(const char filename[]) noexcept(false)
-    -> std::wstring {
-    std::ifstream file{ filename, std::ios::binary };
-    if (!file.is_open()) {
-      throw std::runtime_error(std::format("Failed to open file {}", filename));
-    }
-
-    // Read the file into a string
-    const std::string contents((std::istreambuf_iterator<char>(file)),
-      std::istreambuf_iterator<char>());
-
-    // Convert to wstring (assuming UTF-8 input)
-    // First, determine the required length
-    size_t required = 0;
-    if (mbstowcs_s(&required, nullptr, 0, contents.c_str(), 0) != 0) {
-      throw std::runtime_error("Failed to convert to wide string");
-    }
-
-    std::wstring result(required, L'\0');
-    if (mbstowcs_s(nullptr, result.data(), required, contents.c_str(), required - 1) != 0) {
-      throw std::runtime_error("Failed to convert to wide string");
-    }
-
-    // Remove the trailing null character added by mbstowcs_s
-    if (!result.empty() && result.back() == L'\0') {
-      result.pop_back();
-    }
-    return result;
+/**
+ *
+ * @param filename The path to the file to read.
+ * @return A string containing the file's contents.
+ */
+static auto read_to_string(const char filename[]) -> std::string {
+  std::ifstream file{ filename, std::ios::binary };
+  if (!file.is_open()) {
+    throw std::runtime_error(std::format("Failed to open file {}", filename));
   }
+
+  // Read the file into a string
+  const std::string contents((std::istreambuf_iterator<char>(file)),
+    std::istreambuf_iterator<char>());
+
+  file.close();
+
+  return contents;
 }
 
 auto main(const int argc, const char* argv[]) noexcept -> int {
+  spdlog::cfg::load_env_levels();
+
   try {
-    const auto contents = read_to_wstring(R"(D:\Projects\clox\test.lox)");
+    const auto contents = read_to_string(R"(D:\Projects\clox\test.lox)");
 
-    std::wprintf(L"File contents: %ws", contents.data());
+    auto scanner = lox::syntax::Scanner(contents);
+    std::vector<lox::syntax::Token> tokens;
+    while (true) {
 
-    constexpr auto my_token =
-      lox::syntax::Token{ .kind = lox::syntax::TokenKind::identifier,
-                         .lexeme = std::string_view{"main"},
-        .span = lox::syntax::Span{.start = 0, .end = 4}
+      if (auto token = scanner.get_next_token(); token.has_value()) {
+        tokens.push_back(token.value());
+        if (token.value().kind == lox::syntax::TokenKind::end_of_file) {
+          break;
+        }
+      }
+      else {
+        throw std::runtime_error(std::format("Lexing error: {}", token.error()));
+      }
 
-    };
+    }
 
-    std::println("Token kind: {}, lexeme: {}",
-      lox::syntax::token_kind_to_string(my_token.kind),
-      my_token.lexeme);
+    for (auto token : tokens)
+      std::println("{}", token.to_string());
   }
   catch (const std::exception& e) {
     std::println("Error: {}", e.what());

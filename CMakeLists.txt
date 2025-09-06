@@ -2,6 +2,7 @@
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_EXTENSIONS ON)
 
 if (POLICY CMP0141)
@@ -11,8 +12,10 @@ endif()
 
 project("clox")
 
+find_package(spdlog CONFIG REQUIRED)
+
 add_subdirectory("core")
 
 add_executable(clox "app/main.cpp")
 target_include_directories(clox PRIVATE "core")	
-target_link_libraries(clox PRIVATE lox-core)
+target_link_libraries(clox PRIVATE lox-core spdlog::spdlog)
