@@ -3,43 +3,48 @@
 
 #include "token.hpp"
 
-#include <cstdint>
 #include <expected>
 #include <string>
 #include <string_view>
 
 namespace lox::syntax {
 
-  struct Cursor final {
-    std::string_view src;
-    uint8_t pos;
-  };
+struct Cursor final {
+  std::string_view src;
+  size_t pos;
+};
 
-  class Scanner final {
-  public:
-    explicit Scanner(std::string_view source) noexcept;
+class Scanner final {
+public:
+  explicit Scanner(std::string_view source) noexcept;
 
-    Scanner(const Scanner&) = delete;
-    Scanner(Scanner&&) = delete;
-    Scanner& operator=(const Scanner&) = delete;
-    Scanner& operator=(Scanner&&) = delete;
+  Scanner(const Scanner &) = delete;
+  Scanner(Scanner &&) = delete;
+  Scanner &operator=(const Scanner &) = delete;
+  Scanner &operator=(Scanner &&) = delete;
 
-    ~Scanner() = default;
+  ~Scanner() = default;
 
-    auto get_next_token() noexcept -> std::expected<Token, std::string>;
+  auto get_next_token() noexcept -> std::expected<Token, std::string>;
 
-  private:
-    void skip_whitespace() noexcept;
-    void advance() noexcept;
+private:
+  [[nodiscard]] auto is_at_end() const noexcept -> bool;
+  [[nodiscard]] auto current_char() const noexcept -> char;
+  [[nodiscard]] auto peek_char(size_t offset = 1) const noexcept -> char;
+  auto match_char(char expected) noexcept -> bool;
 
-    auto scan_identifier() noexcept -> std::expected<Token, std::string>;
-    auto scan_number() noexcept -> std::expected<Token, std::string>;
-    auto scan_string() noexcept -> std::expected<Token, std::string>;
+  void skip_whitespace() noexcept;
+  void advance() noexcept;
 
-    std::string_view source_;
-    Cursor cursor_;
-  };
+  auto scan_identifier() noexcept -> std::expected<Token, std::string>;
+  auto scan_number() noexcept -> std::expected<Token, std::string>;
+  auto scan_string() noexcept -> std::expected<Token, std::string>;
+  auto scan_operator() noexcept -> std::expected<Token, std::string>;
 
-}
+  std::string_view source_;
+  Cursor cursor_;
+};
 
-#endif // LOX_SYNTAX_LEX_HPP  
+} // namespace lox::syntax
+
+#endif // LOX_SYNTAX_LEX_HPP

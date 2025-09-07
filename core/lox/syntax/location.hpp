@@ -1,25 +1,24 @@
 #ifndef LOX_SYNTAX_LOCATION_HPP
 #define LOX_SYNTAX_LOCATION_HPP
 
-#include <cstdint>
 #include <optional>
 #include <string_view>
 
 namespace lox::syntax {
 
-  struct Span {
-    uint8_t start, end;
+struct Span {
+  size_t start, end;
 
-    [[nodiscard]] constexpr auto length() const noexcept -> uint8_t {
-      return end - start;
-    }
-  };
+  [[nodiscard]] constexpr auto length() const noexcept -> size_t {
+    return end - start;
+  }
+};
 
-  struct Location {
-    std::optional<std::string_view> source_file_name;
-    int column, line;
-  };
+struct Location {
+  std::optional<std::string_view> source_file_name;
+  int column, line;
+};
 
-}
+} // namespace lox::syntax
 
 #endif // LOX_SYNTAX_LOCATION_HPP

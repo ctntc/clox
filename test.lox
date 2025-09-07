@@ -1,1 +1,5 @@
-var message = "Hello, World!";
+if (10 <= 20) {
+	print "10 is less than or equal to 20";
+} else {
+	print "10 is greater than 20";
+}
