@@ -6,18 +6,18 @@
 
 namespace lox::syntax {
 
-struct Span {
-  size_t start, end;
+  struct Span {
+    size_t start, end;
 
-  [[nodiscard]] constexpr auto length() const noexcept -> size_t {
-    return end - start;
-  }
-};
+    [[nodiscard]] constexpr auto length() const noexcept -> size_t {
+      return end - start;
+    }
+  };
 
-struct Location {
-  std::optional<std::string_view> source_file_name;
-  int column, line;
-};
+  struct Location {
+    std::optional<std::string_view> source_file_name;
+    int column, line;
+  };
 
 } // namespace lox::syntax
 

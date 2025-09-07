@@ -39,8 +39,7 @@
         "strategy": "external"
       },
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "SPDLOG_LEVEL":  "info"
+        "CMAKE_BUILD_TYPE": "Debug"
       }
     },
     {
@@ -60,8 +59,7 @@
         "strategy": "external"
       },
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "SPDLOG_LEVEL": "info"
+        "CMAKE_BUILD_TYPE": "Debug"
       }
     },
     {
