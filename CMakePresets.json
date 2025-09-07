@@ -7,6 +7,12 @@
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "installDir": "${sourceDir}/out/install/${presetName}",
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "enableMicrosoftCodeAnalysis": true,
+          "enableClangTidyCodeAnalysis": true
+        }
+      },
       "cacheVariables": {
         "CMAKE_C_COMPILER": "cl.exe",
         "CMAKE_CXX_COMPILER": "cl.exe",
@@ -24,6 +30,12 @@
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/out/build/${presetName}",
       "installDir": "${sourceDir}/out/install/${presetName}",
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "enableMicrosoftCodeAnalysis": true,
+          "enableClangTidyCodeAnalysis": true
+        }
+      },
       "cacheVariables": {
         "CMAKE_C_COMPILER": "clang.exe",
         "CMAKE_CXX_COMPILER": "clang++.exe",
@@ -40,6 +52,10 @@
       },
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug"
+      },
+      "environment": {
+        "CFLAGS": "/fsanitize=address",
+        "CXXFLAGS": "/fsanitize=address"
       }
     },
     {

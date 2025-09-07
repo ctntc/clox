@@ -1,4 +1,4 @@
-add_library(lox-core STATIC
+add_library("loxc_core" STATIC
  "lox/syntax/location.hpp"
  "lox/syntax/token.hpp"
  "lox/syntax/lex.hpp"
@@ -10,5 +10,5 @@ add_library(lox-core STATIC
  "lox/ast/parse.hpp"
  "lox/ast/parse.cpp"
 )
-target_include_directories(lox-core PUBLIC ".")
-target_link_libraries(lox-core PRIVATE spdlog::spdlog)
+target_include_directories("loxc_core" PUBLIC ".")
+target_link_libraries("loxc_core" PRIVATE spdlog::spdlog)
