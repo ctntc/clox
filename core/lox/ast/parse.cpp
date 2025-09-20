@@ -471,7 +471,7 @@ namespace lox::ast {
             return std::unexpected(left_result.error());
         }
 
-        auto left = std::move(left_result.value());
+        ExprPtr left = std::move(left_result.value());
 
         while (static_cast<uint8_t>(precedence) <= static_cast<uint8_t>(get_precedence(current_token().kind))) {
             const auto &infix_rule = get_rule(current_token().kind);
