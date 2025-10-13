@@ -8,9 +8,9 @@ BraceWrapping:
   AfterNamespace: false
   AfterClass: false
   AfterStruct: false
-WrapNamespaceBodyWithEmptyLines: Always	
+WrapNamespaceBodyWithEmptyLines: Always
 AllowShortIfStatementsOnASingleLine: false
 IndentCaseLabels: false
 ColumnLimit: 120
 NamespaceIndentation: All
-FixNamespaceComments: true	
+FixNamespaceComments: true

@@ -1,8 +1,8 @@
 ﻿---
-Checks:          'clang-diagnostic-*,clang-analyzer-*,cppcoreguidelines-*,modernize-*,performance-*,llvm-include-order'
-WarningsAsErrors: ''
+Checks: "clang-diagnostic-*,clang-analyzer-*,cppcoreguidelines-*,modernize-*,performance-*,llvm-include-order"
+WarningsAsErrors: ""
 HeaderFileExtensions:
-  - ''
+  - ""
   - h
   - hh
   - hpp
@@ -12,11 +12,10 @@ ImplementationFileExtensions:
   - cc
   - cpp
   - cxx
-HeaderFilterRegex: '^(?!.*vcpkg/installed/).*'
-ExcludeHeaderFilterRegex: ''
-FormatStyle:     LLVM
-User:            clauk
-CheckOptions:    {}
-SystemHeaders:   false
+HeaderFilterRegex: "^(?!.*vcpkg/installed/).*"
+ExcludeHeaderFilterRegex: ""
+FormatStyle: LLVM
+User: clauk
+CheckOptions: {}
+SystemHeaders: false
 ...
-

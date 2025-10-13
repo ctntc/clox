@@ -2,6 +2,7 @@
 #include <lox/syntax/lex.hpp>
 #include <lox/syntax/token.hpp>
 
+#include <span>
 #include <spdlog/cfg/env.h>
 
 #include <cstdlib>
@@ -20,10 +21,11 @@
  * @param filename The path to the file to read.
  * @return A string containing the file's contents.
  */
-static auto read_to_string(const char filename[]) -> std::string {
-    std::ifstream file{filename, std::ios::binary};
+static auto read_to_string(std::span<const char> filename) -> std::string {
+    const std::string filename_str(filename.data(), filename.size());
+    std::ifstream file{filename_str, std::ios::binary};
     if (!file.is_open()) {
-        throw std::runtime_error(std::format("Failed to open file {}", filename));
+        throw std::runtime_error(std::format("Failed to open file {}", filename_str));
     }
 
     // Read the file into a string.
