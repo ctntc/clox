@@ -155,7 +155,7 @@ namespace lox::ast {
 
         std::vector<syntax::Token> parameters;
         if (!check(syntax::TokenKind::punctuation) || current_token().lexeme != ")") {
-            do {
+            while (true) {
                 auto param_result = consume(syntax::TokenKind::identifier, "Expected parameter name");
                 if (!param_result) {
                     return std::unexpected(param_result.error());
@@ -166,7 +166,7 @@ namespace lox::ast {
                     break;
                 }
                 advance();
-            } while (true);
+            }
         }
 
         auto rparen_result = consume(syntax::TokenKind::punctuation, "Expected ')' after parameters");
@@ -590,18 +590,20 @@ namespace lox::ast {
         std::vector<ExprPtr> arguments;
 
         if (!check(syntax::TokenKind::punctuation) || current_token().lexeme != ")") {
-            do {
+            auto arg_result = parse_expression();
+            if (!arg_result) {
+                return std::unexpected(arg_result.error());
+            }
+            arguments.push_back(std::move(arg_result.value()));
+
+            while (check(syntax::TokenKind::punctuation) && current_token().lexeme == ",") {
+                advance();
                 auto arg_result = parse_expression();
                 if (!arg_result) {
                     return std::unexpected(arg_result.error());
                 }
                 arguments.push_back(std::move(arg_result.value()));
-
-                if (!check(syntax::TokenKind::punctuation) || current_token().lexeme != ",") {
-                    break;
-                }
-                advance();
-            } while (true);
+            }
         }
 
         auto paren_result = consume(syntax::TokenKind::punctuation, "Expected ')' after arguments");

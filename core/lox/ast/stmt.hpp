@@ -14,7 +14,13 @@
 namespace lox::ast {
 
     struct Statement {
+        Statement() = default;
+        Statement(const Statement &) = delete;
+        auto operator=(const Statement &) -> Statement & = delete;
+        Statement(Statement &&) = delete;
+        auto operator=(Statement &&) -> Statement & = delete;
         virtual ~Statement() = default;
+
         [[nodiscard]] virtual auto to_string() const noexcept -> std::string = 0;
     };
 

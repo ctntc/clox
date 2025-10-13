@@ -59,12 +59,12 @@ namespace lox::syntax {
     struct Token {
         TokenKind kind = TokenKind::end_of_file;
         std::string lexeme;
-        Span span{0, 0};
+        Span span{.start = 0, .end = 0};
 
         static auto make(TokenKind k, std::string_view l, Span s) noexcept -> Token;
         static auto make_eof(Span s = {.start = 1, .end = 1}) noexcept -> Token;
 
-        auto to_string() const noexcept -> std::string;
+        [[nodiscard]] auto to_string() const noexcept -> std::string;
     };
 
 } // namespace lox::syntax

@@ -21,8 +21,8 @@
  * @param filename The path to the file to read.
  * @return A string containing the file's contents.
  */
-static auto read_to_string(std::span<const char> filename) -> std::string {
-    const std::string filename_str(filename.data(), filename.size());
+static auto read_to_string(std::string_view filename) -> std::string {
+    const std::string filename_str(filename);
     std::ifstream file{filename_str, std::ios::binary};
     if (!file.is_open()) {
         throw std::runtime_error(std::format("Failed to open file {}", filename_str));
@@ -39,8 +39,15 @@ static auto read_to_string(std::span<const char> filename) -> std::string {
 auto main(const int argc, const char *argv[]) noexcept -> int {
     spdlog::cfg::load_env_levels();
 
+    const std::span args(argv, static_cast<std::size_t>(argc));
+
+    if (argc != 2) {
+        std::println("Usage: clox <script>");
+        return EXIT_FAILURE;
+    }
+
     try {
-        const auto contents = read_to_string(R"(D:\Projects\clox\test.lox)");
+        const auto contents = read_to_string(std::string_view(args[1]));
 
         auto scanner = lox::syntax::Scanner(contents);
         std::vector<lox::syntax::Token> tokens;

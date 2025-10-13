@@ -13,8 +13,14 @@ namespace lox::syntax {
     };
 
     struct Location {
+        Location(const Location &) = default;
+        Location(Location &&) = default;
+        auto operator=(const Location &) -> Location & = default;
+        auto operator=(Location &&) -> Location & = default;
+        ~Location() = default;
+
         std::optional<std::string_view> source_file_name;
-        int column, line;
+        int column{}, line{};
     };
 
 } // namespace lox::syntax

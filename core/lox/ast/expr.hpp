@@ -13,7 +13,13 @@
 namespace lox::ast {
 
     struct Expression {
+        Expression() = default;
+        Expression(const Expression &) = default;
+        Expression(Expression &&) = delete;
+        auto operator=(const Expression &) -> Expression & = default;
+        auto operator=(Expression &&) -> Expression & = delete;
         virtual ~Expression() = default;
+
         [[nodiscard]] virtual auto to_string() const noexcept -> std::string = 0;
     };
 
@@ -119,7 +125,7 @@ namespace lox::ast {
         std::vector<ExprPtr> arguments;
 
         CallExpression(ExprPtr c, syntax::Token p, std::vector<ExprPtr> args) noexcept
-            : callee(std::move(c)), paren(p), arguments(std::move(args)) {
+            : callee(std::move(c)), paren(std::move(p)), arguments(std::move(args)) {
             spdlog::trace("AST: Created CallExpression with {} arguments", arguments.size());
         }
 

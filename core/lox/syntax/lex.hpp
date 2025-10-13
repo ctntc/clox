@@ -20,8 +20,8 @@ namespace lox::syntax {
 
         Scanner(const Scanner &) = delete;
         Scanner(Scanner &&) = delete;
-        Scanner &operator=(const Scanner &) = delete;
-        Scanner &operator=(Scanner &&) = delete;
+        auto operator=(const Scanner &) -> Scanner & = delete;
+        auto operator=(Scanner &&) -> Scanner & = delete;
 
         ~Scanner() = default;
 
