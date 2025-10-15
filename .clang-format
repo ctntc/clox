@@ -1,4 +1,4 @@
-﻿BasedOnStyle: LLVM
+BasedOnStyle: LLVM
 AccessModifierOffset: -4
 UseTab: Never
 IndentWidth: 4

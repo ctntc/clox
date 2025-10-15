@@ -27,6 +27,7 @@ static auto test_lex_simple_snippet() -> std::vector<lox::syntax::Token> {
 }
 
 auto main() noexcept -> int {
+    // NOLINTNEXTLINE
     if (const auto tokens = test_lex_simple_snippet(); tokens.size() != 6) {
         std::cerr << "Test failed: Expected 6 tokens, got " << tokens.size() << "\n";
         return EXIT_FAILURE;

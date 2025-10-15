@@ -1,3 +1,5 @@
+#include "lox/vm/chunk.hpp"
+#include "lox/vm/common.hpp"
 #include <lox/ast/parse.hpp>
 #include <lox/syntax/lex.hpp>
 #include <lox/syntax/token.hpp>
@@ -35,7 +37,16 @@ static auto read_to_string(std::string_view filename) -> std::string {
 
     return contents;
 }
+auto main() noexcept -> int {
+    lox::vm::Chunk chunk;
 
+    // nolintnextline
+    size_t constant = chunk.add_constant(static_cast<lox::vm::Value>(1.2));
+    chunk.write(static_cast<uint8_t>(lox::vm::OpCode::OP_RETURN));
+    chunk.disassemble("test chunk");
+}
+
+#if 0
 auto main(const int argc, const char *argv[]) noexcept -> int {
     spdlog::cfg::load_env_levels();
 
@@ -79,3 +90,4 @@ auto main(const int argc, const char *argv[]) noexcept -> int {
         return EXIT_FAILURE;
     }
 }
+#endif

@@ -41,8 +41,8 @@ namespace lox::syntax {
         auto scan_string() noexcept -> std::expected<Token, std::string>;
         auto scan_operator() noexcept -> std::expected<Token, std::string>;
 
-        std::string_view source_;
-        Cursor cursor_;
+        std::string_view m_source;
+        Cursor m_cursor;
     };
 
 } // namespace lox::syntax

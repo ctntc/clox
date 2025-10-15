@@ -19,18 +19,18 @@
 
 namespace lox::ast {
 
-    Parser::Parser(std::vector<syntax::Token> tokens) noexcept : tokens_{std::move(tokens)}, current_{0} {
-        spdlog::debug("Parser: Initializing with {} tokens", tokens_.size());
+    Parser::Parser(std::vector<syntax::Token> tokens) noexcept : m_tokens{std::move(tokens)}, m_current{0} {
+        spdlog::debug("Parser: Initializing with {} tokens", m_tokens.size());
         initialize_parse_rules();
         spdlog::debug("Parser: Parse rules initialized");
     }
 
     auto Parser::parse() noexcept -> std::expected<std::vector<StmtPtr>, std::string> {
-        spdlog::info("Parser: Beginning parse of {} tokens", tokens_.size());
+        spdlog::info("Parser: Beginning parse of {} tokens", m_tokens.size());
         std::vector<StmtPtr> statements;
 
         while (!is_at_end()) {
-            spdlog::debug("Parser: Parsing declaration at token {}: {}", current_, current_token().to_string());
+            spdlog::debug("Parser: Parsing declaration at token {}: {}", m_current, current_token().to_string());
             auto stmt_result = parse_declaration();
             if (!stmt_result) {
                 spdlog::error("Parser: Declaration parse failed: {}", stmt_result.error());
@@ -45,22 +45,22 @@ namespace lox::ast {
         return statements;
     }
 
-    auto Parser::current_token() const noexcept -> const syntax::Token & { return tokens_[current_]; }
+    auto Parser::current_token() const noexcept -> const syntax::Token & { return m_tokens[m_current]; }
 
-    auto Parser::previous_token() const noexcept -> const syntax::Token & { return tokens_[current_ - 1]; }
+    auto Parser::previous_token() const noexcept -> const syntax::Token & { return m_tokens[m_current - 1]; }
 
     auto Parser::peek_token() const noexcept -> const syntax::Token & {
-        if (current_ + 1 >= tokens_.size()) {
-            return tokens_.back();
+        if (m_current + 1 >= m_tokens.size()) {
+            return m_tokens.back();
         }
-        return tokens_[current_ + 1];
+        return m_tokens[m_current + 1];
     }
 
     auto Parser::is_at_end() const noexcept -> bool { return current_token().kind == syntax::TokenKind::end_of_file; }
 
     auto Parser::advance() noexcept -> const syntax::Token & {
         if (!is_at_end()) {
-            current_++;
+            m_current++;
         }
         return previous_token();
     }
@@ -629,7 +629,7 @@ namespace lox::ast {
     auto Parser::get_rule(const syntax::TokenKind kind) const noexcept -> const ParseRule & {
         static const ParseRule empty_rule{.prefix = nullptr, .infix = nullptr, .precedence = Precedence::none};
 
-        if (const auto it = rules_.find(kind); it != rules_.end()) {
+        if (const auto it = m_rules.find(kind); it != m_rules.end()) {
             return it->second;
         }
 
@@ -682,22 +682,23 @@ namespace lox::ast {
 
     void Parser::initialize_parse_rules() noexcept {
         spdlog::trace("Parser: Initializing parse rules");
-        rules_[syntax::TokenKind::punctuation] =
-            ParseRule{[this]() -> std::expected<ExprPtr, std::string> {
+        m_rules[syntax::TokenKind::punctuation] =
+            ParseRule{.prefix = [this]() -> std::expected<ExprPtr, std::string> {
                           if (const auto &token = previous_token(); token.lexeme == "(") {
                               return parse_grouping();
                           }
                           return std::unexpected("Unexpected punctuation in expression");
                       },
-                      nullptr, Precedence::none};
+                      .infix = nullptr,
+                      .precedence = Precedence::none};
 
-        // // TODO: Add specific rules for different operator precedences.
+        // TODO: Add specific rules for different operator precedences.
         // auto add_operator_rule = [this](const std::string &op, Precedence
         // prec) {
         //   // This will be handled by the general simple_operator rule above.
         // };
 
-        rules_[syntax::TokenKind::simple_operator] =
+        m_rules[syntax::TokenKind::simple_operator] =
             ParseRule{.prefix = [this]() -> std::expected<ExprPtr, std::string> {
                           if (const auto &token = previous_token(); token.lexeme == "-" || token.lexeme == "!") {
                               return parse_unary();
@@ -722,29 +723,29 @@ namespace lox::ast {
                       },
                       .precedence = Precedence::term};
 
-        rules_[syntax::TokenKind::compound_operator] =
+        m_rules[syntax::TokenKind::compound_operator] =
             ParseRule{.prefix = nullptr,
                       .infix = [this](ExprPtr left) -> std::expected<ExprPtr, std::string> {
                           return parse_binary(std::move(left));
                       },
                       .precedence = Precedence::equality};
 
-        rules_[syntax::TokenKind::identifier] =
+        m_rules[syntax::TokenKind::identifier] =
             ParseRule{.prefix = [this]() -> std::expected<ExprPtr, std::string> { return parse_variable(); },
                       .infix = nullptr,
                       .precedence = Precedence::none};
 
-        rules_[syntax::TokenKind::number_literal] =
+        m_rules[syntax::TokenKind::number_literal] =
             ParseRule{.prefix = [this]() -> std::expected<ExprPtr, std::string> { return parse_literal(); },
                       .infix = nullptr,
                       .precedence = Precedence::none};
 
-        rules_[syntax::TokenKind::string_literal] =
+        m_rules[syntax::TokenKind::string_literal] =
             ParseRule{.prefix = [this]() -> std::expected<ExprPtr, std::string> { return parse_literal(); },
                       .infix = nullptr,
                       .precedence = Precedence::none};
 
-        rules_[syntax::TokenKind::keyword] =
+        m_rules[syntax::TokenKind::keyword] =
             ParseRule{.prefix = [this]() -> std::expected<ExprPtr, std::string> {
                           if (const auto &token = previous_token();
                               token.lexeme == "true" || token.lexeme == "false" || token.lexeme == "nil") {

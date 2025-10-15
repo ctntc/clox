@@ -9,6 +9,11 @@ add_library("loxc_core" STATIC
  "lox/ast/expr.hpp"
  "lox/ast/parse.hpp"
  "lox/ast/parse.cpp"
+
+ "lox/vm/common.hpp"
+ "lox/vm/chunk.hpp"
+ "lox/vm/chunk.cpp"
+ "lox/vm/value.hpp"
 )
 target_include_directories("loxc_core" PUBLIC ".")
 target_link_libraries("loxc_core" PRIVATE spdlog::spdlog)

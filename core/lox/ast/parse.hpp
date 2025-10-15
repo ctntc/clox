@@ -35,8 +35,8 @@ namespace lox::ast {
 
         Parser(const Parser &) = delete;
         Parser(Parser &&) = delete;
-        Parser &operator=(const Parser &) = delete;
-        Parser &operator=(Parser &&) = delete;
+        auto operator=(const Parser &) -> Parser & = delete;
+        auto operator=(Parser &&) -> Parser & = delete;
 
         ~Parser() = default;
 
@@ -83,8 +83,8 @@ namespace lox::ast {
         auto parse_logical(ExprPtr left) noexcept -> std::expected<ExprPtr, std::string>;
         auto parse_assignment(ExprPtr left) noexcept -> std::expected<ExprPtr, std::string>;
         auto parse_call(ExprPtr left) noexcept -> std::expected<ExprPtr, std::string>;
-        auto parse_literal() const noexcept -> std::expected<ExprPtr, std::string>;
-        auto parse_variable() const noexcept -> std::expected<ExprPtr, std::string>;
+        [[nodiscard]] auto parse_literal() const noexcept -> std::expected<ExprPtr, std::string>;
+        [[nodiscard]] auto parse_variable() const noexcept -> std::expected<ExprPtr, std::string>;
 
         auto finish_call(ExprPtr callee) noexcept -> std::expected<ExprPtr, std::string>;
 
@@ -93,9 +93,9 @@ namespace lox::ast {
 
         auto synchronize() noexcept -> void;
 
-        std::vector<syntax::Token> tokens_;
-        size_t current_;
-        std::unordered_map<syntax::TokenKind, ParseRule> rules_;
+        std::vector<syntax::Token> m_tokens;
+        size_t m_current;
+        std::unordered_map<syntax::TokenKind, ParseRule> m_rules;
 
         void initialize_parse_rules() noexcept;
     };

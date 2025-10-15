@@ -288,7 +288,7 @@ static auto test_parse_print_statement() -> bool {
 }
 
 static auto test_parse_if_statement() -> bool {
-    const auto source = "if (true) print \"yes\"; else print \"no\";";
+    const auto source = R"(if (true) print "yes"; else print "no";)";
     auto tokens = scan_tokens(source);
     auto parser = lox::ast::Parser(std::move(tokens));
 
