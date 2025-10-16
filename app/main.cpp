@@ -1,22 +1,14 @@
-#include "lox/vm/chunk.hpp"
 #include "lox/vm/common.hpp"
-#include <lox/ast/parse.hpp>
-#include <lox/syntax/lex.hpp>
-#include <lox/syntax/token.hpp>
+#include "lox/vm/vm.hpp"
 
-#include <span>
 #include <spdlog/cfg/env.h>
 
-#include <cstdlib>
-#include <exception>
 #include <format>
 #include <fstream>
 #include <iterator>
 #include <print>
 #include <stdexcept>
 #include <string>
-#include <utility>
-#include <vector>
 
 /**
  *
@@ -37,57 +29,32 @@ static auto read_to_string(std::string_view filename) -> std::string {
 
     return contents;
 }
-auto main() noexcept -> int {
-    lox::vm::Chunk chunk;
 
-    // nolintnextline
-    size_t constant = chunk.add_constant(static_cast<lox::vm::Value>(1.2));
-    chunk.write(static_cast<uint8_t>(lox::vm::OpCode::OP_RETURN));
-    chunk.disassemble("test chunk");
-}
-
-#if 0
 auto main(const int argc, const char *argv[]) noexcept -> int {
     spdlog::cfg::load_env_levels();
 
-    const std::span args(argv, static_cast<std::size_t>(argc));
+    lox::vm::VirtualMachine vm;
 
-    if (argc != 2) {
-        std::println("Usage: clox <script>");
-        return EXIT_FAILURE;
-    }
+    lox::vm::Chunk chunk;
 
-    try {
-        const auto contents = read_to_string(std::string_view(args[1]));
+    auto constant = chunk.add_constant(1.2);
+    chunk.write(static_cast<uint8_t>(lox::vm::OpCode::OP_CONSTANT), 123);
+    chunk.write(static_cast<uint8_t>(constant), 123);
 
-        auto scanner = lox::syntax::Scanner(contents);
-        std::vector<lox::syntax::Token> tokens;
-        while (true) {
+    constant = chunk.add_constant(3.4);
+    chunk.write(static_cast<uint8_t>(lox::vm::OpCode::OP_CONSTANT), 123);
+    chunk.write(static_cast<uint8_t>(constant), 123);
 
-            if (auto token = scanner.get_next_token(); token.has_value()) {
-                tokens.push_back(token.value());
-                if (token.value().kind == lox::syntax::TokenKind::end_of_file) {
-                    break;
-                }
-            } else {
-                throw std::runtime_error(std::format("Lexing error: {}", token.error()));
-            }
-        }
+    chunk.write(static_cast<uint8_t>(lox::vm::OpCode::OP_ADD), 123);
 
-        auto parser = lox::ast::Parser(std::move(tokens));
-        auto result = parser.parse();
-        if (!result) {
-            throw std::runtime_error(std::format("Parse error: {}", result.error()));
-        }
+    constant = chunk.add_constant(5.6);
+    chunk.write(static_cast<uint8_t>(lox::vm::OpCode::OP_CONSTANT), 123);
+    chunk.write(static_cast<uint8_t>(constant), 123);
 
-        const auto &statements = result.value();
-        for (const auto &stmt : statements) {
-            std::println("{}", stmt->to_string());
-        }
+    chunk.write(static_cast<uint8_t>(lox::vm::OpCode::OP_DIVIDE), 123);
+    chunk.write(static_cast<uint8_t>(lox::vm::OpCode::OP_NEGATE), 123);
 
-    } catch (const std::exception &e) {
-        std::println("Error: {}", e.what());
-        return EXIT_FAILURE;
-    }
+    chunk.write(static_cast<uint8_t>(lox::vm::OpCode::OP_RETURN), 123);
+
+    std::println("{}", lox::vm::interpret_result_to_string(vm.interpret(chunk)));
 }
-#endif
