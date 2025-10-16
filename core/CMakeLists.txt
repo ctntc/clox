@@ -16,6 +16,8 @@ add_library("loxc_core" STATIC
     "lox/vm/value.hpp"
     "lox/vm/vm.hpp"
     "lox/vm/vm.cpp"
+    "lox/vm/compile.hpp"
+    "lox/vm/compile.cpp"
 )
 target_include_directories("loxc_core" PUBLIC ".")
 target_link_libraries("loxc_core" PRIVATE spdlog::spdlog)

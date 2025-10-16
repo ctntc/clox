@@ -1,9 +1,9 @@
 #ifndef LOX_AST_PARSE_HPP
 #define LOX_AST_PARSE_HPP
 
-#include "expr.hpp"
+#include "lox/ast/expr.hpp"
+#include "lox/ast/stmt.hpp"
 #include "lox/syntax/token.hpp"
-#include "stmt.hpp"
 
 #include <cstdint>
 #include <expected>
@@ -31,7 +31,7 @@ namespace lox::ast {
 
     class Parser final {
     public:
-        explicit Parser(std::vector<syntax::Token> tokens) noexcept;
+        explicit Parser(std::string_view source) noexcept;
 
         Parser(const Parser &) = delete;
         Parser(Parser &&) = delete;

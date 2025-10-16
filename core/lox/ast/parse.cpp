@@ -1,13 +1,13 @@
 #include "parse.hpp"
 
-#include "expr.hpp"
-#include "stmt.hpp"
-
-#include <algorithm>
-#include <lox/syntax/token.hpp>
+#include "lox/ast/expr.hpp"
+#include "lox/ast/stmt.hpp"
+#include "lox/syntax/lex.hpp"
+#include "lox/syntax/token.hpp"
 
 #include <spdlog/spdlog.h>
 
+#include <algorithm>
 #include <cstdint>
 #include <expected>
 #include <format>
@@ -19,7 +19,25 @@
 
 namespace lox::ast {
 
-    Parser::Parser(std::vector<syntax::Token> tokens) noexcept : m_tokens{std::move(tokens)}, m_current{0} {
+    Parser::Parser(std::string_view source) noexcept : m_current{0} {
+        auto scanner = lox::syntax::Scanner(source);
+
+        std::vector<syntax::Token> tokens;
+        while (true) {
+            auto token_result = scanner.get_next_token();
+            if (!token_result.has_value()) {
+                break;
+            }
+            auto token = token_result.value();
+            if (token.kind == syntax::TokenKind::end_of_file) {
+                tokens.push_back(std::move(token));
+                break;
+            }
+            tokens.push_back(std::move(token));
+        }
+
+        m_tokens = std::move(tokens);
+
         spdlog::debug("Parser: Initializing with {} tokens", m_tokens.size());
         initialize_parse_rules();
         spdlog::debug("Parser: Parse rules initialized");

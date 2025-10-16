@@ -26,7 +26,7 @@ namespace lox::vm {
         auto operator=(const VirtualMachine &) -> VirtualMachine & = delete;
         auto operator=(VirtualMachine &&) -> VirtualMachine & = delete;
 
-        [[nodiscard]] auto interpret(Chunk chunk) noexcept -> InterpretResult;
+        [[nodiscard]] auto interpret(std::string_view source) noexcept -> InterpretResult;
 
     private:
         [[nodiscard]] auto run() noexcept -> InterpretResult;

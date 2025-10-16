@@ -1,4 +1,3 @@
-#include "lox/vm/common.hpp"
 #include "lox/vm/vm.hpp"
 
 #include <spdlog/cfg/env.h>
@@ -33,28 +32,15 @@ static auto read_to_string(std::string_view filename) -> std::string {
 auto main(const int argc, const char *argv[]) noexcept -> int {
     spdlog::cfg::load_env_levels();
 
+    if (argc != 2) {
+        std::println("Usage: clox <script>");
+        return 64;
+    }
+
     lox::vm::VirtualMachine vm;
 
-    lox::vm::Chunk chunk;
+    // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic)
+    auto source = read_to_string(argv[1]);
 
-    auto constant = chunk.add_constant(1.2);
-    chunk.write(static_cast<uint8_t>(lox::vm::OpCode::OP_CONSTANT), 123);
-    chunk.write(static_cast<uint8_t>(constant), 123);
-
-    constant = chunk.add_constant(3.4);
-    chunk.write(static_cast<uint8_t>(lox::vm::OpCode::OP_CONSTANT), 123);
-    chunk.write(static_cast<uint8_t>(constant), 123);
-
-    chunk.write(static_cast<uint8_t>(lox::vm::OpCode::OP_ADD), 123);
-
-    constant = chunk.add_constant(5.6);
-    chunk.write(static_cast<uint8_t>(lox::vm::OpCode::OP_CONSTANT), 123);
-    chunk.write(static_cast<uint8_t>(constant), 123);
-
-    chunk.write(static_cast<uint8_t>(lox::vm::OpCode::OP_DIVIDE), 123);
-    chunk.write(static_cast<uint8_t>(lox::vm::OpCode::OP_NEGATE), 123);
-
-    chunk.write(static_cast<uint8_t>(lox::vm::OpCode::OP_RETURN), 123);
-
-    std::println("{}", lox::vm::interpret_result_to_string(vm.interpret(chunk)));
+    std::println("{}", lox::vm::interpret_result_to_string(vm.interpret(source)));
 }

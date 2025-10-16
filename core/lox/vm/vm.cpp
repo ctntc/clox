@@ -1,11 +1,14 @@
 #include "vm.hpp"
 
+#include "lox/vm/chunk.hpp"
 #include "lox/vm/common.hpp"
+#include "lox/vm/compile.hpp"
 #include "lox/vm/value.hpp"
 
 #include <spdlog/spdlog.h>
 
 #include <print>
+#include <string_view>
 
 namespace lox::vm {
 
@@ -24,10 +27,18 @@ namespace lox::vm {
 
     VirtualMachine::VirtualMachine() : ip(0), m_stack(), m_chunks() { m_stack.reserve(STACK_MAX); }
 
-    auto VirtualMachine::interpret(Chunk chunk) noexcept -> InterpretResult {
+    auto VirtualMachine::interpret(std::string_view source) noexcept -> InterpretResult {
+        Chunk chunk;
         m_chunks.push_back(std::move(chunk));
         ip = 0;
-        return run();
+
+        Compiler compiler;
+        if (!compiler.compile(source, &chunk)) {
+            return InterpretResult::compile_error;
+        }
+
+        return InterpretResult::ok;
+        // return run();
     }
 
     auto VirtualMachine::run() noexcept -> InterpretResult {

@@ -33,9 +33,8 @@ static auto scan_tokens(const std::string &source) -> std::vector<lox::syntax::T
 
 static auto test_parse_literal_expression() -> bool {
     const auto source = "42;";
-    auto tokens = scan_tokens(source);
 
-    auto parser = lox::ast::Parser(std::move(tokens));
+    auto parser = lox::ast::Parser(source);
 
     auto result = parser.parse();
     if (!result) {
@@ -71,9 +70,8 @@ static auto test_parse_literal_expression() -> bool {
 
 static auto test_parse_binary_expression() -> bool {
     const auto source = "2 + 3 * 4;";
-    auto tokens = scan_tokens(source);
 
-    auto parser = lox::ast::Parser(std::move(tokens));
+    auto parser = lox::ast::Parser(source);
 
     auto result = parser.parse();
     if (!result) {
@@ -109,8 +107,7 @@ static auto test_parse_binary_expression() -> bool {
 
 static auto test_parse_unary_expression() -> bool {
     const auto source = "-42;";
-    auto tokens = scan_tokens(source);
-    auto parser = lox::ast::Parser(std::move(tokens));
+    auto parser = lox::ast::Parser(source);
 
     auto result = parser.parse();
     if (!result) {
@@ -146,8 +143,7 @@ static auto test_parse_unary_expression() -> bool {
 
 static auto test_parse_grouping_expression() -> bool {
     const auto source = "(2 + 3) * 4;";
-    auto tokens = scan_tokens(source);
-    auto parser = lox::ast::Parser(std::move(tokens));
+    auto parser = lox::ast::Parser(source);
 
     auto result = parser.parse();
     if (!result) {
@@ -184,8 +180,7 @@ static auto test_parse_grouping_expression() -> bool {
 
 static auto test_parse_variable_declaration() -> bool {
     const auto source = "var x = 42;";
-    auto tokens = scan_tokens(source);
-    auto parser = lox::ast::Parser(std::move(tokens));
+    auto parser = lox::ast::Parser(source);
 
     auto result = parser.parse();
     if (!result) {
@@ -220,8 +215,7 @@ static auto test_parse_variable_declaration() -> bool {
 
 static auto test_parse_assignment_expression() -> bool {
     const auto source = "x = 42;";
-    auto tokens = scan_tokens(source);
-    auto parser = lox::ast::Parser(std::move(tokens));
+    auto parser = lox::ast::Parser(source);
 
     auto result = parser.parse();
     if (!result) {
@@ -257,8 +251,7 @@ static auto test_parse_assignment_expression() -> bool {
 
 static auto test_parse_print_statement() -> bool {
     const auto source = "print \"Hello, World!\";";
-    auto tokens = scan_tokens(source);
-    auto parser = lox::ast::Parser(std::move(tokens));
+    auto parser = lox::ast::Parser(source);
 
     auto result = parser.parse();
     if (!result) {
@@ -289,8 +282,7 @@ static auto test_parse_print_statement() -> bool {
 
 static auto test_parse_if_statement() -> bool {
     const auto source = R"(if (true) print "yes"; else print "no";)";
-    auto tokens = scan_tokens(source);
-    auto parser = lox::ast::Parser(std::move(tokens));
+    auto parser = lox::ast::Parser(source);
 
     auto result = parser.parse();
     if (!result) {
@@ -330,8 +322,7 @@ static auto test_parse_if_statement() -> bool {
 
 static auto test_parse_while_statement() -> bool {
     const auto source = "while (x < 10) x = x + 1;";
-    auto tokens = scan_tokens(source);
-    auto parser = lox::ast::Parser(std::move(tokens));
+    auto parser = lox::ast::Parser(source);
 
     auto result = parser.parse();
     if (!result) {
@@ -366,8 +357,7 @@ static auto test_parse_while_statement() -> bool {
 
 static auto test_parse_function_declaration() -> bool {
     const auto source = "fun add(a, b) { return a + b; }";
-    auto tokens = scan_tokens(source);
-    auto parser = lox::ast::Parser(std::move(tokens));
+    auto parser = lox::ast::Parser(source);
 
     auto result = parser.parse();
     if (!result) {
@@ -407,8 +397,7 @@ static auto test_parse_function_declaration() -> bool {
 
 static auto test_parse_block_statement() -> bool {
     const auto source = "{ var x = 1; var y = 2; }";
-    auto tokens = scan_tokens(source);
-    auto parser = lox::ast::Parser(std::move(tokens));
+    auto parser = lox::ast::Parser(source);
 
     auto result = parser.parse();
     if (!result) {
@@ -438,8 +427,7 @@ static auto test_parse_block_statement() -> bool {
 
 static auto test_parse_logical_expression() -> bool {
     const auto source = "true and false or true;";
-    auto tokens = scan_tokens(source);
-    auto parser = lox::ast::Parser(std::move(tokens));
+    auto parser = lox::ast::Parser(source);
 
     auto result = parser.parse();
     if (!result) {
