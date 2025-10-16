@@ -1,6 +1,6 @@
-#include "token.hpp"
+#include "lox/syntax/token.hpp"
 
-#include "location.hpp"
+#include "lox/syntax/location.hpp"
 
 #include <format>
 #include <string>

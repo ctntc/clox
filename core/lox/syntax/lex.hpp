@@ -1,7 +1,7 @@
 #ifndef LOX_SYNTAX_LEX_HPP
 #define LOX_SYNTAX_LEX_HPP
 
-#include "token.hpp"
+#include "lox/syntax/token.hpp"
 
 #include <expected>
 #include <string>

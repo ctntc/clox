@@ -1,7 +1,7 @@
 #ifndef LOX_VM_CHUNK_HPP
 #define LOX_VM_CHUNK_HPP
 
-#include "value.hpp"
+#include "lox/vm/value.hpp"
 
 #include <cstdint>
 #include <string_view>
@@ -10,11 +10,11 @@
 namespace lox::vm {
 
     struct Chunk {
-        size_t count;
-        size_t capacity;
-        std::vector<size_t> lines;
         std::vector<std::uint8_t> code;
         std::vector<Value> constants;
+        std::vector<size_t> lines;
+        size_t capacity;
+        size_t count;
 
         explicit Chunk();
         Chunk(const Chunk &) = default;

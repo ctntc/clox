@@ -1,4 +1,4 @@
-#include "compile.hpp"
+#include "lox/vm/compile.hpp"
 
 #include "lox/ast/parse.hpp"
 

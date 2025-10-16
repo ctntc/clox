@@ -1,6 +1,6 @@
-#include "chunk.hpp"
+#include "lox/vm/chunk.hpp"
 
-#include "common.hpp"
+#include "lox/vm/common.hpp"
 
 #include <cstdint>
 #include <print>

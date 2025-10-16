@@ -1,12 +1,13 @@
 #ifndef LOX_AST_STMT_HPP
 #define LOX_AST_STMT_HPP
 
-#include "expr.hpp"
+#include "lox/ast/expr.hpp"
 #include "lox/syntax/token.hpp"
+
+#include <spdlog/spdlog.h>
 
 #include <format>
 #include <memory>
-#include <spdlog/spdlog.h>
 #include <string>
 #include <utility>
 #include <vector>

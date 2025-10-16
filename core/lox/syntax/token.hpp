@@ -1,7 +1,7 @@
 #ifndef LOX_SYNTAX_TOKEN_HPP
 #define LOX_SYNTAX_TOKEN_HPP
 
-#include "location.hpp"
+#include "lox/syntax/location.hpp"
 
 #include <cstdint>
 #include <string>

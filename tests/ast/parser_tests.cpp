@@ -1,11 +1,12 @@
+#include "lox/ast/expr.hpp"
+#include "lox/ast/parse.hpp"
+#include "lox/ast/stmt.hpp"
+#include "lox/syntax/lex.hpp"
+#include "lox/syntax/token.hpp"
+
 #include <cstdlib>
 #include <exception>
 #include <format>
-#include <lox/ast/expr.hpp>
-#include <lox/ast/parse.hpp>
-#include <lox/ast/stmt.hpp>
-#include <lox/syntax/lex.hpp>
-#include <lox/syntax/token.hpp>
 #include <print>
 #include <stdexcept>
 #include <string>

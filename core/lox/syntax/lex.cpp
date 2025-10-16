@@ -1,13 +1,14 @@
-#include "lex.hpp"
+#include "lox/syntax/lex.hpp"
 
-#include "location.hpp"
-#include "token.hpp"
+#include "lox/syntax/location.hpp"
+#include "lox/syntax/token.hpp"
+
+#include <spdlog/spdlog.h>
 
 #include <cctype>
 #include <cstdint>
 #include <expected>
 #include <format>
-#include <spdlog/spdlog.h>
 #include <string>
 #include <string_view>
 

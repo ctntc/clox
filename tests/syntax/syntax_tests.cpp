@@ -1,8 +1,9 @@
+#include "lox/syntax/lex.hpp"
+#include "lox/syntax/token.hpp"
+
 #include <cstdlib>
 #include <format>
 #include <iostream>
-#include <lox/syntax/lex.hpp>
-#include <lox/syntax/token.hpp>
 #include <stdexcept>
 #include <vector>
 

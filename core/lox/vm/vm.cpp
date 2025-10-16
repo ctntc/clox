@@ -1,4 +1,4 @@
-#include "vm.hpp"
+#include "lox/vm/vm.hpp"
 
 #include "lox/vm/chunk.hpp"
 #include "lox/vm/common.hpp"

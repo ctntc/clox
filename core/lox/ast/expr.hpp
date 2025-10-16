@@ -3,9 +3,10 @@
 
 #include "lox/syntax/token.hpp"
 
+#include <spdlog/spdlog.h>
+
 #include <format>
 #include <memory>
-#include <spdlog/spdlog.h>
 #include <string>
 #include <utility>
 #include <vector>
