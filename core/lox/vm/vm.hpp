@@ -56,6 +56,7 @@ namespace lox::vm {
     private:
         size_t m_ip{0};
         std::vector<Chunk> m_chunks;
+        Chunk *m_chunk{nullptr}; // The chunk being run, cached so the dispatch loop skips m_chunks.back().
         std::vector<Value> m_stack;
     };
 

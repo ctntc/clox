@@ -38,6 +38,7 @@ namespace lox::vm {
         }
 
         m_chunks.push_back(std::move(chunk));
+        m_chunk = &m_chunks.back();
         m_ip = 0;
         return InterpretResult::ok;
         // return run();
@@ -51,7 +52,7 @@ namespace lox::vm {
                 std::print("[ {} ]", slot);
             }
             std::println();
-            m_chunks.back().disassemble_instruction(m_ip);
+            m_chunk->disassemble_instruction(m_ip);
 #endif
             uint8_t instruction = read_byte();
             switch (instruction) {
@@ -101,9 +102,10 @@ namespace lox::vm {
         }
     }
 
-    [[nodiscard]] auto VirtualMachine::read_byte() noexcept -> uint8_t { return m_chunks.back().code.at(m_ip++); }
-    [[nodiscard]] auto VirtualMachine::read_constant() noexcept -> Value {
-        return m_chunks.back().constants.at(read_byte());
-    }
+    // Hot path: unchecked indexing. The compiler is responsible for emitting valid bytecode.
+    // NOLINTBEGIN(cppcoreguidelines-pro-bounds-avoid-unchecked-container-access)
+    [[nodiscard]] auto VirtualMachine::read_byte() noexcept -> uint8_t { return m_chunk->code[m_ip++]; }
+    [[nodiscard]] auto VirtualMachine::read_constant() noexcept -> Value { return m_chunk->constants[read_byte()]; }
+    // NOLINTEND(cppcoreguidelines-pro-bounds-avoid-unchecked-container-access)
 
 } // namespace lox::vm
