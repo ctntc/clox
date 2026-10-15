@@ -28,7 +28,7 @@ namespace lox::vm {
         }
     }
 
-    VirtualMachine::VirtualMachine() : m_stack(), m_chunks() { m_stack.reserve(STACK_MAX); }
+    VirtualMachine::VirtualMachine() { m_stack.reserve(STACK_MAX); }
 
     auto VirtualMachine::interpret(std::string_view source) noexcept -> InterpretResult {
         Chunk chunk;

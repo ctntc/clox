@@ -585,8 +585,6 @@ namespace lox::ast {
     }
 
     auto Parser::parse_assignment(ExprPtr left) noexcept -> std::expected<ExprPtr, std::string> {
-        const auto &equals = previous_token();
-
         auto value_result = parse_expression_with_precedence(Precedence::assignment);
         if (!value_result) {
             return std::unexpected(value_result.error());
