@@ -14,7 +14,7 @@ ImplementationFileExtensions:
   - cxx
 HeaderFilterRegex: "^(?!.*vcpkg/installed/).*"
 ExcludeHeaderFilterRegex: ""
-FormatStyle: LLVM
+FormatStyle: llvm
 User: clauk
 CheckOptions: {}
 SystemHeaders: false

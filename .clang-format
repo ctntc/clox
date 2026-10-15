@@ -9,7 +9,7 @@ BraceWrapping:
   AfterClass: false
   AfterStruct: false
 WrapNamespaceBodyWithEmptyLines: Always
-AllowShortIfStatementsOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: Never
 IndentCaseLabels: false
 ColumnLimit: 120
 NamespaceIndentation: All
