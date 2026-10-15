@@ -593,9 +593,7 @@ namespace lox::ast {
         }
 
         if (const auto var_expr = dynamic_cast<VariableExpression *>(left.get())) {
-            const auto &name = var_expr->name;
-            left.release();
-            return std::make_unique<AssignmentExpression>(name, std::move(value_result.value()));
+            return std::make_unique<AssignmentExpression>(var_expr->name, std::move(value_result.value()));
         }
 
         return std::unexpected("Invalid assignment target");
