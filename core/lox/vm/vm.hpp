@@ -38,10 +38,11 @@ namespace lox::vm {
         [[nodiscard]] auto read_byte() noexcept -> uint8_t;
         [[nodiscard]] auto read_constant() noexcept -> Value;
 
-        template <typename BinOp> auto perform_binary_operation(BinOp op) noexcept -> void {
+        // Returns false on stack underflow.
+        template <typename BinOp> [[nodiscard]] auto perform_binary_operation(BinOp op) noexcept -> bool {
             if (m_stack.size() < 2) {
                 spdlog::error("Stack underflow");
-                return;
+                return false;
             }
             const Value b = m_stack.back();
             m_stack.pop_back();
@@ -49,6 +50,7 @@ namespace lox::vm {
             m_stack.pop_back();
             const Value result = op(a, b);
             m_stack.push_back(result);
+            return true;
         }
 
     private:

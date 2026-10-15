@@ -60,18 +60,24 @@ namespace lox::vm {
                 m_stack.push_back(constant);
             } break;
             case static_cast<uint8_t>(OpCode::OP_ADD): {
-                perform_binary_operation(std::plus<>{});
+                if (!perform_binary_operation(std::plus<>{})) {
+                    return InterpretResult::runtime_error;
+                }
             } break;
             case static_cast<uint8_t>(OpCode::OP_SUBTRACT): {
-                perform_binary_operation(std::minus<>{});
-                break;
-            }
+                if (!perform_binary_operation(std::minus<>{})) {
+                    return InterpretResult::runtime_error;
+                }
+            } break;
             case static_cast<uint8_t>(OpCode::OP_MULTIPLY): {
-                perform_binary_operation(std::multiplies<>{});
-                break;
-            }
+                if (!perform_binary_operation(std::multiplies<>{})) {
+                    return InterpretResult::runtime_error;
+                }
+            } break;
             case static_cast<uint8_t>(OpCode::OP_DIVIDE): {
-                perform_binary_operation(std::divides<>{});
+                if (!perform_binary_operation(std::divides<>{})) {
+                    return InterpretResult::runtime_error;
+                }
             } break;
             case static_cast<uint8_t>(OpCode::OP_NEGATE): {
                 if (m_stack.empty()) {
