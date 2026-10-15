@@ -10,6 +10,7 @@
 #include <string>
 
 /**
+ * Reads the contents of a file into a string.
  *
  * @param filename The path to the file to read.
  * @return A string containing the file's contents.
