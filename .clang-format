@@ -14,3 +14,13 @@ IndentCaseLabels: false
 ColumnLimit: 120
 NamespaceIndentation: All
 FixNamespaceComments: true
+InsertNewlineAtEOF: true
+# Main header, then "lox/..." headers, then third-party <lib/...>, then the standard library.
+IncludeBlocks: Regroup
+IncludeCategories:
+  - Regex: '^"lox/'
+    Priority: 1
+  - Regex: '^<[[:alnum:]_.]+/'
+    Priority: 2
+  - Regex: '^<'
+    Priority: 3

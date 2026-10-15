@@ -2,5 +2,4 @@ CompileFlags:
     CompilationDatabase: out/build/x64-debug-llvm/
 
 Diagnostics:
-    ClangTidy:
-        Remove: cppcoreguidelines-avoid-magic-numbers
+    MissingIncludes: Strict

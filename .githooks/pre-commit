@@ -1,0 +1,4 @@
+#!/bin/sh
+# Skip when no C++ files are staged.
+git diff --cached --quiet -- '*.cpp' '*.hpp' && exit 0
+exec just check

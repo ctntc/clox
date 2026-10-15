@@ -13,11 +13,14 @@ Windows, Clang via the `x64-debug-llvm` CMake preset. Dependencies come from vcp
 just build                                   # configure + build (Ninja)
 just run [script.lox]                        # run a script, default test.lox
 ctest --test-dir out/build/x64-debug-llvm    # run all tests
-clang-format -i <files>                      # CI fails on unformatted code in core/ and app/
+just format                                  # clang-format all sources in place
+just check                                   # format check + clang-tidy (warnings are errors)
+just install-hooks                           # once per clone: run `just check` on pre-commit
 ```
 
-`.clang-tidy` enables `cppcoreguidelines-*`, `modernize-*` and `performance-*`. New code
-must not introduce new warnings.
+`.clang-format` owns layout and include order. `.clang-tidy` enables `cppcoreguidelines-*`,
+`modernize-*`, `performance-*` and enforces the naming rules below. `just check` must pass
+before committing; CI only checks formatting.
 
 ## Layout
 
