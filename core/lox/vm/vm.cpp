@@ -56,38 +56,38 @@ namespace lox::vm {
 #endif
             uint8_t instruction = read_byte();
             switch (instruction) {
-            case static_cast<uint8_t>(OpCode::OP_CONSTANT): {
+            case static_cast<uint8_t>(OpCode::constant): {
                 Value constant = read_constant();
                 m_stack.push_back(constant);
             } break;
-            case static_cast<uint8_t>(OpCode::OP_ADD): {
+            case static_cast<uint8_t>(OpCode::add): {
                 if (!perform_binary_operation(std::plus<>{})) {
                     return InterpretResult::runtime_error;
                 }
             } break;
-            case static_cast<uint8_t>(OpCode::OP_SUBTRACT): {
+            case static_cast<uint8_t>(OpCode::subtract): {
                 if (!perform_binary_operation(std::minus<>{})) {
                     return InterpretResult::runtime_error;
                 }
             } break;
-            case static_cast<uint8_t>(OpCode::OP_MULTIPLY): {
+            case static_cast<uint8_t>(OpCode::multiply): {
                 if (!perform_binary_operation(std::multiplies<>{})) {
                     return InterpretResult::runtime_error;
                 }
             } break;
-            case static_cast<uint8_t>(OpCode::OP_DIVIDE): {
+            case static_cast<uint8_t>(OpCode::divide): {
                 if (!perform_binary_operation(std::divides<>{})) {
                     return InterpretResult::runtime_error;
                 }
             } break;
-            case static_cast<uint8_t>(OpCode::OP_NEGATE): {
+            case static_cast<uint8_t>(OpCode::negate): {
                 if (m_stack.empty()) {
                     spdlog::error("Stack underflow");
                     return InterpretResult::runtime_error;
                 }
                 m_stack.back() = -m_stack.back();
             } break;
-            case static_cast<uint8_t>(OpCode::OP_RETURN): {
+            case static_cast<uint8_t>(OpCode::ret): {
                 if (m_stack.empty()) {
                     spdlog::error("Stack underflow");
                     return InterpretResult::runtime_error;

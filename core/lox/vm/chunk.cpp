@@ -42,24 +42,24 @@ namespace lox::vm {
 
         const auto instruction = static_cast<OpCode>(code.at(offset));
         switch (instruction) {
-        case OpCode::OP_CONSTANT:
+        case OpCode::constant:
             return disassemble_constant_instruction("OP_CONSTANT", offset);
-        case OpCode::OP_ADD:
+        case OpCode::add:
             std::println("OP_ADD");
             return offset + 1;
-        case OpCode::OP_SUBTRACT:
+        case OpCode::subtract:
             std::println("OP_SUBTRACT");
             return offset + 1;
-        case OpCode::OP_MULTIPLY:
+        case OpCode::multiply:
             std::println("OP_MULTIPLY");
             return offset + 1;
-        case OpCode::OP_DIVIDE:
+        case OpCode::divide:
             std::println("OP_DIVIDE");
             return offset + 1;
-        case OpCode::OP_NEGATE:
+        case OpCode::negate:
             std::println("OP_NEGATE");
             return offset + 1;
-        case OpCode::OP_RETURN:
+        case OpCode::ret:
             std::println("OP_RETURN");
             return offset + 1;
         default:

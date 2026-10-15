@@ -5,21 +5,19 @@
 
 namespace lox::vm {
 
-    // NOLINTBEGIN(readability-identifier-naming)
     /**
      * @enum OpCode
      * @brief The operation codes for the bytecode instructions.
      */
     enum class OpCode : std::uint8_t {
-        OP_CONSTANT,
-        OP_ADD,
-        OP_SUBTRACT,
-        OP_MULTIPLY,
-        OP_DIVIDE,
-        OP_NEGATE,
-        OP_RETURN,
+        constant,
+        add,
+        subtract,
+        multiply,
+        divide,
+        negate,
+        ret,
     };
-    // NOLINTEND(readability-identifier-naming)
 
 } // namespace lox::vm
 
