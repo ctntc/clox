@@ -10,12 +10,9 @@
 
 namespace lox::vm {
 
-    Chunk::Chunk() : lines(0), code({}), constants({}) {}
-
     auto Chunk::write(uint8_t byte, size_t line) noexcept -> void {
         code.push_back(byte);
         lines.push_back(line);
-        count++;
     }
 
     auto Chunk::add_constant(Value value) noexcept -> size_t {
@@ -26,7 +23,7 @@ namespace lox::vm {
     auto Chunk::disassemble(std::string_view name) noexcept -> void {
         std::println("== {} ==\n", name);
 
-        for (size_t offset = 0; offset < count;) {
+        for (size_t offset = 0; offset < code.size();) {
             offset = this->disassemble_instruction(offset);
         }
     }

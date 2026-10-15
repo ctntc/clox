@@ -14,10 +14,8 @@ namespace lox::vm {
         std::vector<std::uint8_t> code;
         std::vector<Value> constants;
         std::vector<size_t> lines;
-        size_t capacity{0};
-        size_t count{0};
 
-        explicit Chunk();
+        explicit Chunk() = default;
         Chunk(const Chunk &) = default;
         Chunk(Chunk &&) = default;
         auto operator=(const Chunk &) -> Chunk & = default;
