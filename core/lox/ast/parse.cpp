@@ -14,12 +14,13 @@
 #include <initializer_list>
 #include <memory>
 #include <string>
+#include <string_view>
 #include <utility>
 #include <vector>
 
 namespace lox::ast {
 
-    Parser::Parser(std::string_view source) noexcept : m_current{0} {
+    Parser::Parser(std::string_view source) noexcept {
         auto scanner = lox::syntax::Scanner(source);
 
         std::vector<syntax::Token> tokens;
@@ -593,7 +594,7 @@ namespace lox::ast {
 
         if (const auto var_expr = dynamic_cast<VariableExpression *>(left.get())) {
             const auto &name = var_expr->name;
-            auto _ = left.release();
+            left.release();
             return std::make_unique<AssignmentExpression>(name, std::move(value_result.value()));
         }
 

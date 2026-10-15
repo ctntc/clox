@@ -5,11 +5,13 @@
 #include "lox/ast/stmt.hpp"
 #include "lox/syntax/token.hpp"
 
+#include <cstddef>
 #include <cstdint>
 #include <expected>
 #include <functional>
 #include <initializer_list>
 #include <string>
+#include <string_view>
 #include <unordered_map>
 #include <vector>
 
@@ -94,7 +96,7 @@ namespace lox::ast {
         auto synchronize() noexcept -> void;
 
         std::vector<syntax::Token> m_tokens;
-        size_t m_current;
+        size_t m_current{0};
         std::unordered_map<syntax::TokenKind, ParseRule> m_rules;
 
         void initialize_parse_rules() noexcept;

@@ -2,9 +2,13 @@
 #define LOX_VM_VM_HPP
 
 #include "lox/vm/chunk.hpp"
+#include "lox/vm/value.hpp"
 
 #include <spdlog/spdlog.h>
 
+#include <cstddef>
+#include <cstdint>
+#include <string_view>
 #include <vector>
 
 namespace lox::vm {
@@ -48,7 +52,7 @@ namespace lox::vm {
         }
 
     private:
-        size_t ip;
+        size_t m_ip{0};
         std::vector<Chunk> m_chunks;
         std::vector<Value> m_stack;
     };

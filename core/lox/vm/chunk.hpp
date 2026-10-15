@@ -3,6 +3,7 @@
 
 #include "lox/vm/value.hpp"
 
+#include <cstddef>
 #include <cstdint>
 #include <string_view>
 #include <vector>
@@ -13,8 +14,8 @@ namespace lox::vm {
         std::vector<std::uint8_t> code;
         std::vector<Value> constants;
         std::vector<size_t> lines;
-        size_t capacity;
-        size_t count;
+        size_t capacity{0};
+        size_t count{0};
 
         explicit Chunk();
         Chunk(const Chunk &) = default;

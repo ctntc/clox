@@ -5,6 +5,7 @@
 
 namespace lox::vm {
 
+    // NOLINTBEGIN(readability-identifier-naming)
     /**
      * @enum OpCode
      * @brief The operation codes for the bytecode instructions.
@@ -18,6 +19,7 @@ namespace lox::vm {
         OP_NEGATE,
         OP_RETURN,
     };
+    // NOLINTEND(readability-identifier-naming)
 
 } // namespace lox::vm
 

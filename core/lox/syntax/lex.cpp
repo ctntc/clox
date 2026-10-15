@@ -6,6 +6,7 @@
 #include <spdlog/spdlog.h>
 
 #include <cctype>
+#include <cstddef>
 #include <cstdint>
 #include <expected>
 #include <format>

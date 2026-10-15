@@ -1,13 +1,16 @@
 #include "lox/vm/chunk.hpp"
 
 #include "lox/vm/common.hpp"
+#include "lox/vm/value.hpp"
 
+#include <cstddef>
 #include <cstdint>
 #include <print>
+#include <string_view>
 
 namespace lox::vm {
 
-    Chunk::Chunk() : count(0), capacity(0), lines(0), code({}), constants({}) {}
+    Chunk::Chunk() : lines(0), code({}), constants({}) {}
 
     auto Chunk::write(uint8_t byte, size_t line) noexcept -> void {
         code.push_back(byte);

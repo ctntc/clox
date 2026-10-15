@@ -1,6 +1,10 @@
 #include "lox/vm/compile.hpp"
 
 #include "lox/ast/parse.hpp"
+#include "lox/vm/chunk.hpp"
+
+#include <fmt/base.h>
+#include <spdlog/spdlog.h>
 
 #include <string_view>
 

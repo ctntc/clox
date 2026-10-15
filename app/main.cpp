@@ -4,10 +4,12 @@
 
 #include <format>
 #include <fstream>
+#include <ios>
 #include <iterator>
 #include <print>
 #include <stdexcept>
 #include <string>
+#include <string_view>
 
 /**
  * Reads the contents of a file into a string.

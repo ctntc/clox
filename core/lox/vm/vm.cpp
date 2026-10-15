@@ -7,8 +7,11 @@
 
 #include <spdlog/spdlog.h>
 
+#include <cstdint>
+#include <functional>
 #include <print>
 #include <string_view>
+#include <utility>
 
 namespace lox::vm {
 
@@ -25,12 +28,12 @@ namespace lox::vm {
         }
     }
 
-    VirtualMachine::VirtualMachine() : ip(0), m_stack(), m_chunks() { m_stack.reserve(STACK_MAX); }
+    VirtualMachine::VirtualMachine() : m_stack(), m_chunks() { m_stack.reserve(STACK_MAX); }
 
     auto VirtualMachine::interpret(std::string_view source) noexcept -> InterpretResult {
         Chunk chunk;
         m_chunks.push_back(std::move(chunk));
-        ip = 0;
+        m_ip = 0;
 
         Compiler compiler;
         if (!compiler.compile(source, &chunk)) {
@@ -49,10 +52,10 @@ namespace lox::vm {
                 std::print("[ {} ]", slot);
             }
             std::println();
-            m_chunks.back().disassemble_instruction(ip);
+            m_chunks.back().disassemble_instruction(m_ip);
 #endif
-            uint8_t instruction = 0;
-            switch (instruction = read_byte()) {
+            uint8_t instruction = read_byte();
+            switch (instruction) {
             case static_cast<uint8_t>(OpCode::OP_CONSTANT): {
                 Value constant = read_constant();
                 m_stack.push_back(constant);
@@ -86,7 +89,7 @@ namespace lox::vm {
         }
     }
 
-    [[nodiscard]] auto VirtualMachine::read_byte() noexcept -> uint8_t { return m_chunks.back().code.at(ip++); }
+    [[nodiscard]] auto VirtualMachine::read_byte() noexcept -> uint8_t { return m_chunks.back().code.at(m_ip++); }
     [[nodiscard]] auto VirtualMachine::read_constant() noexcept -> Value {
         return m_chunks.back().constants.at(read_byte());
     }
