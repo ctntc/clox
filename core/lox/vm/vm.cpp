@@ -94,6 +94,9 @@ namespace lox::vm {
                 std::println("{}", m_stack.back());
                 return InterpretResult::ok;
             }
+            default:
+                spdlog::error("Unknown opcode {}", instruction);
+                return InterpretResult::runtime_error;
             }
         }
     }
