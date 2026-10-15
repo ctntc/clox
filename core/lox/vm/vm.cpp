@@ -81,6 +81,10 @@ namespace lox::vm {
                 m_stack.back() = -m_stack.back();
             } break;
             case static_cast<uint8_t>(OpCode::OP_RETURN): {
+                if (m_stack.empty()) {
+                    spdlog::error("Stack underflow");
+                    return InterpretResult::runtime_error;
+                }
                 std::println("{}", m_stack.back());
                 return InterpretResult::ok;
             }
