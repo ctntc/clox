@@ -3,7 +3,6 @@
 #include "lox/ast/parse.hpp"
 #include "lox/vm/chunk.hpp"
 
-#include <fmt/base.h>
 #include <spdlog/spdlog.h>
 
 #include <string_view>
@@ -21,7 +20,7 @@ namespace lox::vm {
         const auto &program = result.value();
 
         for (const auto &stmt : program) {
-            fmt::println("Parsed statement: {}", stmt->to_string());
+            spdlog::debug("Parsed statement: {}", stmt->to_string());
         }
 
         return true;
