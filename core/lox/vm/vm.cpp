@@ -86,9 +86,9 @@ namespace lox::vm {
         }
     }
 
-    [[nodiscard]] auto VirtualMachine::read_byte() noexcept -> uint8_t { return m_chunks.back().code[ip++]; }
+    [[nodiscard]] auto VirtualMachine::read_byte() noexcept -> uint8_t { return m_chunks.back().code.at(ip++); }
     [[nodiscard]] auto VirtualMachine::read_constant() noexcept -> Value {
-        return m_chunks.back().constants[read_byte()];
+        return m_chunks.back().constants.at(read_byte());
     }
 
 } // namespace lox::vm

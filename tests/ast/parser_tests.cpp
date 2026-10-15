@@ -49,7 +49,7 @@ static auto test_parse_literal_expression() -> bool {
         return false;
     }
 
-    const auto *expr_stmt = dynamic_cast<const lox::ast::ExpressionStatement *>(statements[0].get());
+    const auto *expr_stmt = dynamic_cast<const lox::ast::ExpressionStatement *>(statements.at(0).get());
     if (!expr_stmt) {
         std::print("Expected expression statement\n");
         return false;
@@ -86,7 +86,7 @@ static auto test_parse_binary_expression() -> bool {
         return false;
     }
 
-    const auto *expr_stmt = dynamic_cast<const lox::ast::ExpressionStatement *>(statements[0].get());
+    const auto *expr_stmt = dynamic_cast<const lox::ast::ExpressionStatement *>(statements.at(0).get());
     if (!expr_stmt) {
         std::print("Expected expression statement\n");
         return false;
@@ -122,7 +122,7 @@ static auto test_parse_unary_expression() -> bool {
         return false;
     }
 
-    const auto *expr_stmt = dynamic_cast<const lox::ast::ExpressionStatement *>(statements[0].get());
+    const auto *expr_stmt = dynamic_cast<const lox::ast::ExpressionStatement *>(statements.at(0).get());
     if (!expr_stmt) {
         std::print("Expected expression statement\n");
         return false;
@@ -158,7 +158,7 @@ static auto test_parse_grouping_expression() -> bool {
         return false;
     }
 
-    const auto *expr_stmt = dynamic_cast<const lox::ast::ExpressionStatement *>(statements[0].get());
+    const auto *expr_stmt = dynamic_cast<const lox::ast::ExpressionStatement *>(statements.at(0).get());
     if (!expr_stmt) {
         std::print("Expected expression statement\n");
         return false;
@@ -195,7 +195,7 @@ static auto test_parse_variable_declaration() -> bool {
         return false;
     }
 
-    const auto *var_stmt = dynamic_cast<const lox::ast::VarStatement *>(statements[0].get());
+    const auto *var_stmt = dynamic_cast<const lox::ast::VarStatement *>(statements.at(0).get());
     if (!var_stmt) {
         std::print("Expected variable statement\n");
         return false;
@@ -230,7 +230,7 @@ static auto test_parse_assignment_expression() -> bool {
         return false;
     }
 
-    const auto *expr_stmt = dynamic_cast<const lox::ast::ExpressionStatement *>(statements[0].get());
+    const auto *expr_stmt = dynamic_cast<const lox::ast::ExpressionStatement *>(statements.at(0).get());
     if (!expr_stmt) {
         std::print("Expected expression statement\n");
         return false;
@@ -266,7 +266,7 @@ static auto test_parse_print_statement() -> bool {
         return false;
     }
 
-    const auto *print_stmt = dynamic_cast<const lox::ast::PrintStatement *>(statements[0].get());
+    const auto *print_stmt = dynamic_cast<const lox::ast::PrintStatement *>(statements.at(0).get());
     if (!print_stmt) {
         std::print("Expected print statement\n");
         return false;
@@ -297,7 +297,7 @@ static auto test_parse_if_statement() -> bool {
         return false;
     }
 
-    const auto *if_stmt = dynamic_cast<const lox::ast::IfStatement *>(statements[0].get());
+    const auto *if_stmt = dynamic_cast<const lox::ast::IfStatement *>(statements.at(0).get());
     if (!if_stmt) {
         std::print("Expected if statement\n");
         return false;
@@ -337,7 +337,7 @@ static auto test_parse_while_statement() -> bool {
         return false;
     }
 
-    const auto *while_stmt = dynamic_cast<const lox::ast::WhileStatement *>(statements[0].get());
+    const auto *while_stmt = dynamic_cast<const lox::ast::WhileStatement *>(statements.at(0).get());
     if (!while_stmt) {
         std::print("Expected while statement\n");
         return false;
@@ -372,7 +372,7 @@ static auto test_parse_function_declaration() -> bool {
         return false;
     }
 
-    const auto *fun_stmt = dynamic_cast<const lox::ast::FunctionDeclarationStatement *>(statements[0].get());
+    const auto *fun_stmt = dynamic_cast<const lox::ast::FunctionDeclarationStatement *>(statements.at(0).get());
     if (!fun_stmt) {
         std::print("Expected function declaration statement\n");
         return false;
@@ -412,7 +412,7 @@ static auto test_parse_block_statement() -> bool {
         return false;
     }
 
-    const auto *block_stmt = dynamic_cast<const lox::ast::BlockStatement *>(statements[0].get());
+    const auto *block_stmt = dynamic_cast<const lox::ast::BlockStatement *>(statements.at(0).get());
     if (!block_stmt) {
         std::print("Expected block statement\n");
         return false;
@@ -442,7 +442,7 @@ static auto test_parse_logical_expression() -> bool {
         return false;
     }
 
-    const auto *expr_stmt = dynamic_cast<const lox::ast::ExpressionStatement *>(statements[0].get());
+    const auto *expr_stmt = dynamic_cast<const lox::ast::ExpressionStatement *>(statements.at(0).get());
     if (!expr_stmt) {
         std::print("Expected expression statement\n");
         return false;

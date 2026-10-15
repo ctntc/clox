@@ -63,15 +63,15 @@ namespace lox::ast {
         return statements;
     }
 
-    auto Parser::current_token() const noexcept -> const syntax::Token & { return m_tokens[m_current]; }
+    auto Parser::current_token() const noexcept -> const syntax::Token & { return m_tokens.at(m_current); }
 
-    auto Parser::previous_token() const noexcept -> const syntax::Token & { return m_tokens[m_current - 1]; }
+    auto Parser::previous_token() const noexcept -> const syntax::Token & { return m_tokens.at(m_current - 1); }
 
     auto Parser::peek_token() const noexcept -> const syntax::Token & {
         if (m_current + 1 >= m_tokens.size()) {
             return m_tokens.back();
         }
-        return m_tokens[m_current + 1];
+        return m_tokens.at(m_current + 1);
     }
 
     auto Parser::is_at_end() const noexcept -> bool { return current_token().kind == syntax::TokenKind::end_of_file; }

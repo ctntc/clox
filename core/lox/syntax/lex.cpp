@@ -32,11 +32,11 @@ namespace lox::syntax {
 
     auto Scanner::is_at_end() const noexcept -> bool { return m_cursor.pos >= m_source.length(); }
 
-    auto Scanner::current_char() const noexcept -> char { return is_at_end() ? '\0' : m_source[m_cursor.pos]; }
+    auto Scanner::current_char() const noexcept -> char { return is_at_end() ? '\0' : m_source.at(m_cursor.pos); }
 
     auto Scanner::peek_char(const size_t offset) const noexcept -> char {
         const size_t pos = static_cast<size_t>(m_cursor.pos) + static_cast<size_t>(offset);
-        return pos >= m_source.length() ? '\0' : m_source[pos];
+        return pos >= m_source.length() ? '\0' : m_source.at(pos);
     }
 
     auto Scanner::match_char(const char expected) noexcept -> bool {
