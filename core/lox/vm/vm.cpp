@@ -32,14 +32,13 @@ namespace lox::vm {
 
     auto VirtualMachine::interpret(std::string_view source) noexcept -> InterpretResult {
         Chunk chunk;
-        m_chunks.push_back(std::move(chunk));
-        m_ip = 0;
-
         Compiler compiler;
         if (!compiler.compile(source, &chunk)) {
             return InterpretResult::compile_error;
         }
 
+        m_chunks.push_back(std::move(chunk));
+        m_ip = 0;
         return InterpretResult::ok;
         // return run();
     }
